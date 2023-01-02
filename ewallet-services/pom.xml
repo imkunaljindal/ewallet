@@ -5,8 +5,8 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>user-services</module>
-		<module>wallet-services</module>
-	</modules>
+        <module>wallet-service</module>
+    </modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -38,6 +38,14 @@
 			<groupId>org.springframework.kafka</groupId>
 			<artifactId>spring-kafka</artifactId>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+
 
 		<dependency>
 			<groupId>com.mysql</groupId>
