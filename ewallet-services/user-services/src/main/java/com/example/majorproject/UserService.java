@@ -26,7 +26,7 @@ public class UserService {
     KafkaTemplate<String,String> kafkaTemplate;
 
     private final String REDIS_PREFIX_USER = "user::";
-    private final String CREATE_WALLET_TOPIC = "wallet_create";
+    private final String CREATE_WALLET_TOPIC = "create_wallet";
     public void createUser(UserRequest userRequest) {
 
         User user = User.builder()
