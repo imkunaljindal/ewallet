@@ -6,9 +6,9 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface WalletRepository extends JpaRepository<Wallet,Integer> {
 
-    @Modifying
-    @Query(value="UPDATE Wallet w set w.amount = w.amount + :amount where w.userName = :userName",nativeQuery = true)
-    int updateWallet(String userName,int amount);
+//    @Modifying
+//    @Query(value="UPDATE Wallet w set w.amount = w.amount + :amount where w.userName = :userName",nativeQuery = true)
+//    int updateWallet(String userName,int amount);
 
     Wallet findByUserName(String userName);
 }

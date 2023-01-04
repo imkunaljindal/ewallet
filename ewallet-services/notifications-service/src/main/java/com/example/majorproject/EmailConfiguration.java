@@ -8,12 +8,32 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.*;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import java.util.Properties;
 
 @Configuration
-public class TransactionConfig {
+public class EmailConfiguration {
+
+    @Bean
+    public JavaMailSender getJavaMailSender() {
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setHost("smtp.gmail.com");
+        mailSender.setPort(587);
+
+        mailSender.setUsername("avengersbackendbank@gmail.com");
+        mailSender.setPassword("test@1234");
+
+        Properties props = mailSender.getJavaMailProperties();
+        props.put("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.debug", "true");
+
+        return mailSender;
+    }
 
     @Bean
     ObjectMapper objectMapper(){
@@ -23,11 +43,6 @@ public class TransactionConfig {
     @Bean
     Properties kafkaPropeties(){
         Properties properties = new Properties();
-
-        properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,StringSerializer.class);
-        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,"localhost:9092");
-
         properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringSerializer.class);
         properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,StringSerializer.class);
         properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,"localhost:9092");
@@ -48,17 +63,8 @@ public class TransactionConfig {
     }
 
     @Bean
-    ProducerFactory<String,String> getProducerFactory(){
-        return new DefaultKafkaProducerFactory(kafkaPropeties());
+    SimpleMailMessage getSimpleMailMessage(){
+        return new SimpleMailMessage();
     }
 
-    @Bean
-    KafkaTemplate<String,String> getKafkaTemplate(){
-        return new KafkaTemplate<>(getProducerFactory());
-    }
-
-    @Bean
-    RestTemplate getRestTemplate(){
-        return new RestTemplate();
-    }
 }

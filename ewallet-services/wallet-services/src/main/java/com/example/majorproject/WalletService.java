@@ -50,8 +50,13 @@ public class WalletService {
 
         if(balance>=amount){
             // Paisa hi paisa
-            walletRepository.updateWallet(fromUser,-1*amount);
-            walletRepository.updateWallet(toUser,amount);
+            Wallet fromWallet = walletRepository.findByUserName(fromUser);
+            fromWallet.setBalance(balance - amount);
+            walletRepository.save(fromWallet);
+
+            Wallet toWallet = walletRepository.findByUserName(toUser);
+            toWallet.setBalance(balance + amount);
+            walletRepository.save(toWallet);
 
             transactionObject.put("status","SUCCESS");
             transactionObject.put("transactionId",transactionId);
